@@ -1,10 +1,10 @@
 export const getGalleryMarkup = items => {
-    return items.map(hit => getCardMarkup(hit))
-        .join("");
+  return items.map(hit => getCardMarkup(hit))
+    .join("");
 };
 
 export const getCardMarkup = item => {
-    return `<div class="photo-card">
+  return `<div class="photo-card">
             <a href="${item.largeImageURL}">
                 <img src="${item.webformatURL}" alt="${item.tags}" loading="lazy" class="card-image" />
             </a>

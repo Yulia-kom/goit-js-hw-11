@@ -12,6 +12,14 @@ refs.loadMoreBtn.hidden = true;
 let page = 1;
 let query = "";
 
+const lightbox = new SimpleLightbox('.gallery a',
+  {
+    captionType: 'attr',
+    captionsData: 'alt',
+    captionPosition: 'bottom',
+    captionDelay: 250
+  });
+
 refs.searchForm.addEventListener("submit",
   async (event) => {
     event.preventDefault();
@@ -24,9 +32,12 @@ refs.searchForm.addEventListener("submit",
     if (data.totalHits > 0) {
       const markup = getGalleryMarkup(data.hits);
       refs.gallery.innerHTML = markup;
+      scrollToCard(0);
+
       if (data.totalHits > PER_PAGE) {
         refs.loadMoreBtn.hidden = false;
       }
+      lightbox.refresh();
       Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
     } else {
       refs.gallery.innerHTML = '';
@@ -48,6 +59,14 @@ refs.loadMoreBtn.addEventListener("click", async () => {
 
   const markup = getGalleryMarkup(data.hits);
   refs.gallery.insertAdjacentHTML('beforeend', markup);
-
+  scrollToCard((page - 1) * PER_PAGE);
+  lightbox.refresh();
 });
 
+function scrollToCard(num) {
+  const rect = refs.gallery.children[num].getBoundingClientRect();
+  window.scrollBy({
+    top: rect.y,
+    behavior: "smooth"
+  });
+}
