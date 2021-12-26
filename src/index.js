@@ -25,6 +25,7 @@ refs.searchForm.addEventListener("submit",
     event.preventDefault();
     refs.loadMoreBtn.hidden = true;
 
+
     query = event.currentTarget.elements.searchQuery.value;
     page = 1;
     const data = await searchApi(query, page);
@@ -39,6 +40,7 @@ refs.searchForm.addEventListener("submit",
       }
       lightbox.refresh();
       Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+
     } else {
       refs.gallery.innerHTML = '';
       Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");

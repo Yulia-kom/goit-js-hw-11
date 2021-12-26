@@ -16,6 +16,12 @@ export const searchApi = async (query, page) => {
         key: API_KEY
     });
 
-    const res = await axios.get('', { params });
-    return res.data;
+    try {
+        const res = await axios.get('', { params });
+        return res.data;
+    } catch (err) {
+        console.error(err);
+        return {};
+    }
+
 }
